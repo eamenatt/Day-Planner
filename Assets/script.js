@@ -7,7 +7,7 @@ setInterval(function () {
     $("#currentDay").text(moment().format("dddd, MMM Do YYYY hh mm ss a"));
 }, 1000);
 
-// Color code 
+// categorize colors
 function colorCode(timeBlock, description) {
     if (timeBlock == current) {
         description.addClass("present");

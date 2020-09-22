@@ -1,5 +1,5 @@
 
-var activities = {};
+var activity = {};
 var current = moment().hours();
 
 // Update current time
@@ -24,8 +24,8 @@ function makeTimeBlock(time) {
     var data = "time" + time;
     var individualHour = $("<div class='row'>");
     var timeStamp = $("<div class='col-2 hour time-block'>");
-    var activityDescription = $("<textarea class='description col-8' data-description=" + data + ">");
-    var saveButton = $("<button class='saveBtn col-2' data-time=" + data + "><i class='fas fa-save'></i>");
+    var activityDescription = $("<textarea class='description col-9' data-description=" + data + ">");
+    var saveButton = $("<button class='saveBtn col-1' data-time=" + data + "> <i class='far fa-save'></i>");
 
     colorCode(time, activityDescription);
     timeStamp.text(numberToStringTime(time));
@@ -51,31 +51,27 @@ function displayPlanner() {
 displayPlanner();
 
 
-//check local storage for actvities to display
+//check local storage
 function displayActivities() {
-    activities = JSON.parse(localStorage.getItem("activities")) || {};
-    if (activities) {
-        for (var key in activities) {
-            $(`[data-description=${key}]`).text(activities[key]);
+    activity = JSON.parse(localStorage.getItem("activity")) || {};
+    if (activity) {
+        for (var key in activity) {
+            $(`[data-description=${key}]`).text(activity[key]);
         }
     }
 }
-// Save activity
-function writeActivitiesToLocalstorage() {
-    localStorage.setItem("activities", JSON.stringify(activities));
+// Save function
+function storeActivities() {
+    localStorage.setItem("activity", JSON.stringify(activity));
 }
 
-//save button functionality
+//save button
 $(".saveBtn").click(function () {
-
-    // when save button is clicked get its data attribute
     var identifier = $(this).data("time");
-    // select description box with the same data attribute
     var description = $(`[data-description=${identifier}]`);
     if (description.val() != undefined) {
-        //take that value and assign create an object with the time stamp as key, and the text content as value
-        activities[identifier] = description.val();
-        writeActivitiesToLocalstorage();
+        activity[identifier] = description.val();
+        storeActivities();
     }
 
 });
